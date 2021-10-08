@@ -8,7 +8,7 @@
   <link rel="shortcut icon" href="icons/icon-192x192.png" type="image/x-icon">
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" type="text/html" href="./styles.css">
 
   <title>Budget Tracker</title>
 </head>
@@ -48,8 +48,8 @@
     (function() {
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
-          .register("./service-worker.js")
-          .then(res => {
+          .register("./service-worker.js", {scope: "/"}) //Register js file and define scope
+          .then(res => { //Res is registrayion object
             console.log(res);
             console.log("Service Worker registered successfully.");
           })

@@ -7,7 +7,8 @@ const ASSETS_TO_CACHE = [
     "/assets/css/style.css",
     "/assets/js/index.js",
     "/assets/images/icons/icon-192x192.png",
-    "/assets/images/icons/icon-512x512.png"
+    "/assets/images/icons/icon-512x512.png",
+    
 ]
 
 //Call install event
@@ -16,6 +17,7 @@ self.addEventListener("install", e => {
 
     e.waitUntil(
         //Open cache and parse all files 
+        //Pupulate cache with all available responses which the service worker can use when offline
         caches
             .open(STATIC_CACHE)
             .then(cache => {
@@ -29,19 +31,23 @@ self.addEventListener("install", e => {
 //Call activate event
 self.addEventListener("activate", e => {
     console.log("Service worker activated")
+    const currentCaches = [STATIC_CACHE, RUNTIME_CACHE]
     //Remove unwanted caches
     e.waitUntil(
         //Current cache is not the one we are looping throughh we want to delete it
-        caches.keys().then(cacheNames => {
+        caches.keys()
+        .then((cacheNames) => {
+            return cacheNames.filter((cacheName) => !currentCaches.includes(cacheName));
+        })
+        .then((cachesToDelete) => {
             return Promise.all(
-                cacheNames.map(cache => {
-                    if(cache !== cacheName){
-                        console.log("Service Worker: Clearing old caches")
-                        return caches.delete(cache)
-                    }
+                cachesToDelete.map((cachesToDelete) => {
+                    console.log("Service Worker: Clearing old caches")
+                    return caches.delete(cachesToDelete)
                 })
             )
         })
+        .then(() => self.clients.claim())
     );
 });
 
