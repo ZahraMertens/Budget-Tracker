@@ -1,5 +1,5 @@
 const STATIC_CACHE = "static-cache-v1";
-const RUNTIME_CACHE = "runtime-cache";
+const DATA_CACHE = "runtime-cache";
 
 const ASSETS_TO_CACHE = [
     "/",
@@ -8,7 +8,6 @@ const ASSETS_TO_CACHE = [
     "/assets/js/index.js",
     "/assets/images/icons/icon-192x192.png",
     "/assets/images/icons/icon-512x512.png",
-    
 ]
 
 //Call install event
@@ -54,9 +53,33 @@ self.addEventListener("activate", e => {
 //Call fetch event 
 self.addEventListener("fetch", e => {
     console.log("Service Worker: Fetching!")
-    //Check if live site is availble else use off site
-    e.responseWith(
-        fetch(e.request).catch(() => caches.match(e.request))
+    
+    //We want to intercept when fetch is fired
+    if (e.request.url.includes("/api/")){
+        e.respondWith(
+            caches.open(DATA_CACHE)
+            .then(cache => {
+                return fetch(e.request)
+                .then(response => {
+                    if (response.status === 200){
+                        //If res is ok we store the res in our cache
+                        cache.put(e.request.url, response.clone());
+                    }
+                    return response;
+                })
+                .catch(err => {
+                    return cache.match(e.request)
+                })
+            }).catch(err => console.log(err))
+        )
+        return;
+    }
+
+    e.respondWith(
+        caches.match(e.request)
+        .then(function(response) {
+            return response || fetch(e.request);
+        })
     )
 })
 
