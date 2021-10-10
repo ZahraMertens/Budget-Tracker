@@ -151,3 +151,23 @@ document.querySelector("#add-btn").onclick = function() {
 document.querySelector("#sub-btn").onclick = function() {
   sendTransaction(false);
 };
+
+// document.querySelector("#del-btn").onclick = function() {
+//   deleteTransaction();
+// };
+
+// function deleteTransaction () {
+//   fetch("/api/transaction", {
+//     method: "DELETE"
+//   })
+//   .then(response => {    
+//     return response.json();
+//   })
+//   .then(data => {
+//     location.reload();
+//   })
+//   .catch(err => {
+//     location.reload();
+//     console.log(err)
+//   });
+// }

@@ -71,7 +71,10 @@ function checkDB () {
             currentStore.clear();
             console.log('Clearing store 🧹');
           }
-        });
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
   };
 }

@@ -1,11 +1,12 @@
-const STATIC_CACHE = "static-cache-v1";
-const DATA_CACHE = "runtime-cache";
+const STATIC_CACHE = "static-cache-v2";
+const DATA_CACHE = "data-cache-v2";
 
 const ASSETS_TO_CACHE = [
     "/",
     "/index.html",
-    "/assets/css/style.css",
+    "/assets/css/styles.css",
     "/assets/js/index.js",
+    "/assets/js/indexedDB.js",
     "/assets/images/icons/icon-192x192.png",
     "/assets/images/icons/icon-512x512.png",
 ]
@@ -19,7 +20,7 @@ self.addEventListener("install", e => {
         //Pupulate cache with all available responses which the service worker can use when offline
         caches
             .open(STATIC_CACHE)
-            .then(cache => {
+            .then((cache) => {
                 console.log("Service Worker: Caching Files");
                 cache.addAll(ASSETS_TO_CACHE)
             })
@@ -30,7 +31,7 @@ self.addEventListener("install", e => {
 //Call activate event
 self.addEventListener("activate", e => {
     console.log("Service worker activated")
-    const currentCaches = [STATIC_CACHE, RUNTIME_CACHE]
+    const currentCaches = [STATIC_CACHE, DATA_CACHE]
     //Remove unwanted caches
     e.waitUntil(
         //Current cache is not the one we are looping throughh we want to delete it
