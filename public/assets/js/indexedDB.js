@@ -1,49 +1,93 @@
+let db;
+
 //Open connection, parse name of database and version of database
 const request = indexedDB.open("BudgetDB", 1);
 
-//Create object store
-//Will be exected when we change the version of the db
-request.onupgradeneeded = ({ target }) => {
-    //Gives access to db object
-    const db = target.result;
-    //access interface idbdatabase and Create new object store
-    const newStore = db.createObjectStore("budgetStore", { //Collection
-        keyPath: "transactionID"
-    }); 
-    console.log(newStore);
+request.onupgradeneeded = function (event) {
+    console.log("Upgrade needed IndexedDB");
 
-    //Create index from object store (column) to be able to query over database
-    // "status" is index and "status" (index itself) key path (name for column)
-    newStore.createIndex("statusIndex", "status");
+    const { oldVersion } = event;
+    const newVersion = event.newVersion || db.version;
+
+    console.log(`DB Updated from version ${oldVersion} to ${newVersion}`);
+
+    db = event.target.result;
+
+    if (db.objectStoreNames.length === 0) {
+        db.createObjectStore('budgetStore', { autoIncrement: true });
+    }
+}
+
+request.onerror = function (event) {
+    console.log(event.target.errorCode);
+}
+
+request.onsuccess = function (event) {
+    db = event.target.result;
+  
+    // Check if app is online before reading from db
+    if (navigator.onLine) {
+      console.log('Backend online! 🗄️');
+      checkDB();
+    }
 };
 
-//Add and get data from the database = Create transaction
-request.onsuccess = () => {
-    console.log(request.result)
-    const db = request.result
+function checkDB () {
     //Specify name of store and actions we will perform
     //Create transaction in order to query over db
     const transaction = db.transaction(["budgetStore"], "readwrite"); 
-    //Define object store to be able to add data
+    //Define object store to be able to add/check data
     const budgetStore = transaction.objectStore("budgetStore");
-    //Get status index
-    const statusIndex = budgetStore.index("statusIndex");
+    // Get all records from store and set to a variable
+    const getAll = budgetStore.getAll();
 
+    // If the request was successful
+    getAll.onsuccess = function () {
+    // If there are items in the store, we need to bulk add them when we are back online
+    //Ceck for data
+    if (getAll.result.length > 0) {
+      fetch('/api/transaction/bulk', {
+        method: 'POST',
+        body: JSON.stringify(getAll.result), //Send data to api.js to bulk post 
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => {
+            console.log(response)
+            response.json();
+        })
+        .then((res) => {
+          // If our returned response is not empty
+          if (res.length !== 0) {
+            // Open another transaction to BudgetStore with the ability to read and write
+            transaction = db.transaction(['budgetStore'], 'readwrite');
 
-    //Add elements to database
-    budgetStore.add({transactionID: "1", status: "pending"});
+            // Assign the current store to a variable
+            const currentStore = transaction.objectStore('budgetStore');
 
-    // 2 ways to query over database: 
-    //Return item by keyPath/ kind of like primary key
-    const getRequest = budgetStore.get("1");
-    getRequest.onsuccess = () => {
-        consolelog(getRequest.result)
+            // Clear existing entries because our bulk add was successful
+            currentStore.clear();
+            console.log('Clearing store 🧹');
+          }
+        });
     }
-
-    //Return item by index/ retrieve object by specific value status
-    const getRequestIdx = statusIndex.getAll("pending");
-    getRequestIdx.onsuccess = () => {
-        console.log(getRequestIdx.result)
-    }
-
+  };
 }
+
+//When fetch fails because we are offline we add record to indexeddb object store
+const saveRecord = (record) => {
+    console.log('Save record invoked');
+    // Create a transaction on the BudgetStore db with readwrite access
+    const transaction = db.transaction(['budgetStore'], 'readwrite');
+  
+    // Access your BudgetStore object store
+    const store = transaction.objectStore('budgetStore');
+  
+    // Add record to your store with add method.
+    store.add(record);
+};
+
+// Listen for app coming back online
+window.addEventListener('online', checkDB);
