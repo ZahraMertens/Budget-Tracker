@@ -43,8 +43,8 @@ function checkDB () {
 
     // If the request was successful
     getAll.onsuccess = function () {
-    // If there are items in the store, we need to bulk add them when we are back online
-    //Ceck for data
+    // If there are items in the store, we need to bulk-add them when we are back online
+    //Check for data
     if (getAll.result.length > 0) {
       fetch('/api/transaction/bulk', {
         method: 'POST',

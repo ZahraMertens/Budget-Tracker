@@ -3,12 +3,13 @@ const DATA_CACHE = "data-cache-v2";
 
 const ASSETS_TO_CACHE = [
     "/",
-    "/index.html",
-    "/assets/css/styles.css",
-    "/assets/js/index.js",
-    "/assets/js/indexedDB.js",
-    "/assets/images/icons/icon-192x192.png",
-    "/assets/images/icons/icon-512x512.png",
+    "index.html",
+    "assets/css/styles.css",
+    "assets/js/index.js",
+    "assets/js/indexedDB.js",
+    "assets/images/icons/icon-192x192.png",
+    "assets/images/icons/icon-512x512.png",
+    "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 ]
 
 //Call install event
