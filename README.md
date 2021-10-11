@@ -40,7 +40,7 @@ The Web Application is a Budget-Tracker which allows a user to to able to keep t
 
 ### Installation of Code:
 
-* First the user must clone the [GitHub Repo](https://github.com/ZahraMertens/Fitness-Tracker.git) on its OS.
+* First the user must clone the [GitHub Repo](https://github.com/ZahraMertens/Budget-Tracker.git) on its OS.
 
 * Open the repository on your device with VS Code (or any other program)
 
@@ -48,34 +48,31 @@ The Web Application is a Budget-Tracker which allows a user to to able to keep t
 
 * First, you MUST install the npm packages by running "npm install" in the terminal
 
-* To initialize the database the user must have mongoDB installed and then run "mongo" and "use workout" in the terminal
+* To initialize the database the user must have mongoDB installed and then run "mongo" in the terminal
 
-* To seed the database, the user must run "node seeders/seed" in the terminal.
-
-* To un the application on your local device the user must run "npm start" in the terminal and will see a link such as "http://localhost:27017" if the user runs the link in the browser the application should run on the local host.
+* To un the application on your local device the user must run "npm start" in the terminal and will see a link such as "http://localhost:3000" if the user runs the link in the browser the application should run on the local host.
 
 
 ## Technologies Used
 
 * JavaScript
-
 * Node.JS
-
 * Express.JS
-
 * MongoDB
-
 * Dotenv
-
 * Mongoose
-
-* Morgan
-
 * MongoDB Atlas (Cloud)
+* Service Worker
+* Web Manifest
+* IndexedDB
 
 ## User Story
 
-* As a user, I want to be able to view create and track daily workouts. I want to be able to log multiple exercises in a workout on a given day. I should also be able to track the name, type, weight, sets, reps, and duration of exercise. If the exercise is a cardio exercise, I should be able to track my distance traveled.
+```
+AS AN avid traveller
+I WANT to be able to track my withdrawals and deposits with or without a data/internet connection
+SO THAT my account balance is accurate when I am traveling
+```
 
 ## Business Context
 
