@@ -34,6 +34,12 @@ The Web Application is a Budget-Tracker which allows a user to to able to keep t
 
 ## Installation Instructions
 
+### Installation as "Add to homescreen" Application of phone:
+
+![Screenshot](./assets/installation.gif)
+
+### Installation of Code:
+
 * First the user must clone the [GitHub Repo](https://github.com/ZahraMertens/Fitness-Tracker.git) on its OS.
 
 * Open the repository on your device with VS Code (or any other program)
