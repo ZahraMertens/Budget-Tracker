@@ -22,7 +22,7 @@
 
 ## Task Description
 
-The Web Application is a Budget-Tracker which allows a user to to able to keep track of their expenses. The user is able to add and substract funds into the tracker and a graph displays the progress of the users expenses. The web application is also a PWA (Progressive Web App) which allows the user to add the webpage as a bookmark on the homescreen of the phone or desktop and can operate offline.
+The Web Application is a Budget-Tracker which allows a user to to able to keep track of their expenses. The user is able to add and substract funds into the tracker and a graph displays the progress of the users expenses. The web application is also a PWA (Progressive Web App) which allows the user to add the webpage as a bookmark on the homescreen of the phone or desktop and can operate offline. When the user adds expenses offline and goes back online, the offline entries shold be added to the tracker.
 
 ## Mock-Up
 
@@ -76,35 +76,27 @@ SO THAT my account balance is accurate when I am traveling
 
 ## Business Context
 
-A consumer will reach their fitness goals more quickly when they track their workout progress.
+A consumer is more aware of his/her expenses when entering all expenses and deposits into the budget tracker.
 
 ## Usage
 
-* WHEN I open the application in the browser THEN I am presented with a data summary of the last workout which displays the sum of the exercises criteria such as Date, Total Workout Duration, Exercises Performed, Total Weight Lifted, Total Sets Performed and Total Reps Performed
+* WHEN I open the application in the browser THEN I am presented with a graph and input fields
 
-* WHEN I see the page which summarizes the last workout data THEN I can choose to either create a New Workout Plan or Continue the last workout plan
+* WHEN I input an expense name and amount i can decide to substract funds or add funds to my budget tracker
 
-* WHEN I click on the "new workout" button THEN I can add a new exercise
+* WHEN I enter the funds a list of all entered expenses will appear above the graph and the graph will display my expenses more visially
 
-* WHEN I decide to add a new exercise I can choose from two different exercise types which are cardio and resistance
-
-* WHEN I choose my exercise to be cardio THEN I can enter the name, distance and duration of the exercise
-
-* WHEN I choose my exercise to be resistance THEN I can enter the name, weight, sets, reps and duration of the exercise
-
-* WHEN I insert all values in the input fields THEN I can choose to complete the workout plan and the exercise gets added to the workout and I will be redirected to the page where the workout summary is displayed. I can then see that my new exercise has been added to the workout. If I choose to add an exercise than I stay on the same page in order to be able to add more exercises to the workout and my exercise I have created gets added to the workout plan
-
-* WHEN I click in the Dashboard Navbar element THEN I am taken to a page which shows to graphs. The first graph shows the Workout durations in minutes for the past 7 days and the second graph shows the weight lifted over the past 7 days. 
+* WHEN the user inputs a withdrawal or deposit when offline THEN it will be shown on the page, and added to their transaction history when their connection is back online.
 
 
 ## Credits
 
 * https://www.mongodb.com/
-* https://docs.mongodb.com/manual/tutorial/query-documents/
 * https://mongoosejs.com/docs/
-* https://mongoosejs.com/docs/api.html#aggregate_Aggregate
-* https://docs.mongodb.com/manual/reference/operator/aggregation/addFields/
-* https://docs.mongodb.com/manual/reference/operator/aggregation/sum/
+* https://cloudconvert.com/mp4-to-gif
+* https://developer.mozilla.org/en-US/docs/Web/Manifest
+* https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
+* https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
 
 
-© 2021 Zahra Mertens, Fitness-Tracker
+© 2021 Zahra Mertens, Budget-Tracker
